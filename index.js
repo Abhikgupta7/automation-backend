@@ -24,16 +24,16 @@ app.get('/search', async (req, res) => {
   }
 
   try {
-    const browser = await puppeteer.launch({ headless: 'new', });
+    const browser = await puppeteer.launch({ headless: true, });
     const page = await browser.newPage();
 
-    await page.goto(`https://www.youtube.com`);
+    await page.goto(`https://www.youtube.com`, { timeout: 90000 });
 
     await page.type('input#search', searchQuery);
     await page.click('button#search-icon-legacy');
 
 
-    await page.goto(`https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`, {
+    await page.goto(`https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`, { timeout: 90000 }, {
       waitUntil: 'domcontentloaded',
     });
 
